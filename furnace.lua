@@ -90,10 +90,7 @@ minetest.register_abm({
 		if furnace_time.compatibility then
 			-- This check here can be removed (there is a check in the while loop) but the infotext needs the cooked and cookable variables in the function scope
 			cooked, aftercooked = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
-			
-			if cooked.time == 0 then
-				cookable = false
-			end
+			cookable = cooked.time ~= 0
 		end
 
 		-- Get the time delta between last run
@@ -143,7 +140,7 @@ minetest.register_abm({
 						if inv:room_for_item("dst", cooked.item) then
 							inv:add_item("dst", cooked.item)
 							inv:set_stack("src", 1, aftercooked.items[1])
-							srclist = aftercooked.items[1]
+							srclist = inv:get_list("src")
 							src_time = 0
 						end
 					end
@@ -162,7 +159,7 @@ minetest.register_abm({
 					else
 						-- Take fuel from fuel list
 						inv:set_stack("fuel", 1, afterfuel.items[1])
-						fuellist = afterfuel.items[1]
+						fuellist = inv:get_list("fuel")
 						
 						fuel_totaltime = fuel.time
 						fuel_time = 0
