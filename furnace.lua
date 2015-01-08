@@ -109,10 +109,7 @@ minetest.register_abm({
 		while delta > 0 do
 			-- Recheck if we still have cookable content
 			cooked, aftercooked = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
-			
-			if cooked.time == 0 then
-				cookable = false
-			end
+			cookable = cooked.time ~= 0
 
 			-- Determine appropriate time step size
 			local step = delta
