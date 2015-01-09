@@ -120,7 +120,7 @@ minetest.register_abm({
 					else
 						step = math.min(delta, fuel_left)
 					end
-				else
+				elseif cookable then
 					-- No fuel left, replacing costs 1 second
 					step = 1
 				end
